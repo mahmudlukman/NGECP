@@ -1,9 +1,11 @@
 import { Logout, Settings } from '@mui/icons-material'
 import { ListItemButton, Menu, MenuItem } from '@mui/material'
 import { useValue } from '../../context/ContextProvider'
+import useCheckToken from '../../hooks/useCheckToken'
 
 // eslint-disable-next-line react/prop-types
 const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {
+  useCheckToken()
   const { dispatch } = useValue()
   const handleCloseUserMenu = () => {
     setAnchorUserMenu(null)
