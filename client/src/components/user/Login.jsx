@@ -20,6 +20,13 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    // testing Notification
+    const password = passwordRef.current.value
+    const confirmPassword = confirmPasswordRef.current.value
+    if (password !== confirmPassword) {
+      dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'error', message: 'Passwords do not match!' } })
+    }
   }
 
   useEffect(() => {
