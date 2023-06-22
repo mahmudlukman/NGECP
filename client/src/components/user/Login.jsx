@@ -20,6 +20,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    // testing
+    dispatch({ type: 'START_LOADING' })
+
+    setTimeout(() => {
+      dispatch({ type: 'END_LOADING' })
+    }, 5000)
 
     // testing Notification
     const password = passwordRef.current.value
