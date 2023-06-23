@@ -49,18 +49,18 @@ export const login = tryCatch(async (req, res) => {
       .status(400)
       .json({ success: false, message: 'Invalid credentials' });
 
-  const { _id: id, name, photoURL, role, active } = existedUser;
+  const { _id: id, name, photoURL, phone, role, active } = existedUser;
   if (!active)
     return res.status(400).json({
       success: false,
       message: 'This account has been suspended! Try to contact the admin',
     });
-  const token = jwt.sign({ id, name, photoURL, role }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ id, name, photoURL, phone, role }, process.env.JWT_SECRET, {
     expiresIn: '1h',
   });
   res.status(200).json({
     success: true,
-    result: { id, name, email: emailLowerCase, photoURL, token, role, active },
+    result: { id, name, email: emailLowerCase, photoURL, phone, token, role, active },
   });
 });
 

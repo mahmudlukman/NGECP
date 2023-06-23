@@ -3,7 +3,7 @@ import { Close, Send } from "@mui/icons-material"
 import { useValue } from "../../context/ContextProvider"
 import { useState, useRef, useEffect } from "react"
 import PasswordField from "./PasswordField"
-import { register } from "../../actions/user"
+import { login, register } from "../../actions/user"
 
 const Login = () => {
   const { state: { openLogin }, dispatch } = useValue()
@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault()
     const email = emailRef.current.value
     const password = passwordRef.current.value
-    // send login request if it is not register
+    if(!isRegister) return login({email, password}, dispatch)
     const name = nameRef.current.value
     const phone = phoneRef.current.value
     const confirmPassword = confirmPasswordRef.current.value
