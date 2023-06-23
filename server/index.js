@@ -2,11 +2,11 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 // import roomRouter from './routes/roomRouter.js'
-// import userRouter from './routes/userRouter.js'
+import userRouter from './routes/userRouter.js'
 
 const app = express()
 dotenv.config()
-app.disable('x-powered-by')
+// app.disable('x-powered-by')
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL)
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 app.use(express.json({limit: '10mb'}))
 
 // app.use('/room', roomRouter)
-// app.use('/user', userRouter)
+app.use('/user', userRouter)
 
 app.get('/', (req, res) => res.json({message: 'Welcome to our API'}))
 app.use((req, res) => res.status(404).json({success: false, message: 'Not Found'}))
