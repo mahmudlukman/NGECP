@@ -1,7 +1,7 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from './config';
 
-const uploadFile = (file, filePath) => {
+const UploadFile = (file, filePath) => {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const storageRef = ref(storage, filePath);
@@ -15,4 +15,4 @@ const uploadFile = (file, filePath) => {
   });
 };
 
-export default uploadFile;
+export default UploadFile;

@@ -10,7 +10,10 @@ const NavBar = () => {
   const { state: { currentUser }, dispatch } = useValue()
   return (
     <>
-      <AppBar>
+      <AppBar sx={{
+              background:
+                '#388e3c',
+            }}>
         <Container maxWidth='lg'>
           <Toolbar disableGutters>
             <Box sx={{ mr: 1 }}>

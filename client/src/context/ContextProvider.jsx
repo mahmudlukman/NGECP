@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useReducer } from "react"
-import reducer from "./reducer"
+import { createContext, useContext, useEffect, useReducer } from 'react';
+import reducer from './reducer';
 
 const initialState = {
   currentUser: null,
@@ -7,17 +7,17 @@ const initialState = {
   loading: false,
   alert: { open: false, severity: 'info', message: '' },
   profile: { open: false, file: null, photoURL: '' },
-}
+  images: [],
+};
 
-const Context = createContext(initialState)
+const Context = createContext(initialState);
 
 export const useValue = () => {
-  return useContext(Context)
-}
+  return useContext(Context);
+};
 
-// eslint-disable-next-line react/prop-types
 const ContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     if (currentUser) {
@@ -26,7 +26,7 @@ const ContextProvider = ({ children }) => {
   }, []);
   return (
     <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
-  )
-}
+  );
+};
 
-export default ContextProvider
+export default ContextProvider;

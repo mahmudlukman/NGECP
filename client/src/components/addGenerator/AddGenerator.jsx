@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Button, Container, Stack, Step, StepButton, Stepper } from '@mui/material'
 import AddLocation from './addLocation/AddLocation'
 import AddDetails from './addDetails/AddDetails'
 import AddImages from './addImages/AddImages'
+import { useValue } from '../../context/ContextProvider'
 
 const AddGenerator = () => {
+  const {state: {images}} = useValue()
   const [activeStep, setActiveStep] = useState(0)
   const [steps, setSteps] = useState([
     { label: 'Location', completed: false },
@@ -30,6 +32,21 @@ const AddGenerator = () => {
   const findUnfinished = () => {
     return steps.findIndex((step) => !step.completed);
   };
+
+  useEffect(() => {
+    if(images.length){
+      if(!steps[2].completed) setComplete(2, true)
+    } else {
+      if(steps[2].completed) setComplete(2, false)
+    }
+  }, [images])
+
+  const setComplete = (index, status) => {
+    setSteps((steps) => {
+      steps[index].completed = status
+      return [...steps]
+    })
+  }
 
   return (
     <Container sx={{ my: 4 }}>
