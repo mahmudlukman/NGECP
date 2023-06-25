@@ -35,11 +35,12 @@ const BottomNav = () => {
           showLabels
           value={value}
           onChange={(e, newValue) => setValue(newValue)}
+          sx={{"&.Mui-selected": {color: '#388e3c'}}}
         >
-          <BottomNavigationAction label='Home' icon={<AddHome />} />
-          <BottomNavigationAction label='Map' icon={<LocationOn />} />
-          <BottomNavigationAction label='Generators' icon={<Handyman />} />
-          <BottomNavigationAction label='Add' icon={<AddLocationAlt />} />
+          <BottomNavigationAction label='Home' icon={<AddHome />} sx={{"&.Mui-selected": {color: '#388e3c'}}}/>
+          <BottomNavigationAction label='Map' icon={<LocationOn />} sx={{"&.Mui-selected": {color: '#388e3c'}}}/>
+          <BottomNavigationAction label='Generators' icon={<Handyman />} sx={{"&.Mui-selected": {color: '#388e3c'}}}/>
+          <BottomNavigationAction label='Add' icon={<AddLocationAlt sx={{"&.Mui-selected": {color: '#388e3c'}}}/>} />
         </BottomNavigation>
       </Paper>
     </Box>

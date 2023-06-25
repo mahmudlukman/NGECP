@@ -6,7 +6,7 @@ import AddImages from './addImages/AddImages'
 import { useValue } from '../../context/ContextProvider'
 
 const AddGenerator = () => {
-  const {state: {images}} = useValue()
+  const {state: {images, details}} = useValue()
   const [activeStep, setActiveStep] = useState(0)
   const [steps, setSteps] = useState([
     { label: 'Location', completed: false },
@@ -41,6 +41,14 @@ const AddGenerator = () => {
     }
   }, [images])
 
+  useEffect(() => {
+    if(details.company.length > 0 && details.usageType.length > 0 && details.genType.length > 0 && details.power.length > 0 && details.model.length > 0 && details.serialNumber.length > 0 ){
+      if(!steps[1].completed) setComplete(1, true)
+    } else {
+      if(steps[1].completed) setComplete(1, false)
+    }
+  }, [details])
+
   const setComplete = (index, status) => {
     setSteps((steps) => {
       steps[index].completed = status
@@ -54,7 +62,8 @@ const AddGenerator = () => {
         alternativeLabel
         nonLinear
         activeStep={activeStep}
-        sx={{ mb: 3 }}
+        sx={{ mb: 3}}
+        
       >
         {steps.map((step, index) => (
           <Step key={step.label} completed={step.completed}>
