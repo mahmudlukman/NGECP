@@ -8,7 +8,8 @@ const initialState = {
   alert: { open: false, severity: 'info', message: '' },
   profile: { open: false, file: null, photoURL: '' },
   images: [],
-  details: { company: '', usageType: '', genType: '', power: '', model: '', serialNumber: '',}
+  details: { company: '', usageType: '', genType: '', power: '', model: '', serialNumber: '', },
+  location: { lng: 0, lat: 0 },
 };
 
 const Context = createContext(initialState);

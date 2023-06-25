@@ -16,7 +16,6 @@ const AddDetails = () => {
   const {dispatch} = useValue()
   const [spacing, setSpacing] = useState(2);
   const [inputs, setInputs] = useState(initialState)
-  console.log({ inputs })
 
   const onInputChange = (e) => {
     setInputs((prevState) => ({

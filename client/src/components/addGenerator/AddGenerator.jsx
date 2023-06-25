@@ -6,7 +6,7 @@ import AddImages from './addImages/AddImages'
 import { useValue } from '../../context/ContextProvider'
 
 const AddGenerator = () => {
-  const {state: {images, details}} = useValue()
+  const {state: {images, details, location}} = useValue()
   const [activeStep, setActiveStep] = useState(0)
   const [steps, setSteps] = useState([
     { label: 'Location', completed: false },
@@ -48,6 +48,14 @@ const AddGenerator = () => {
       if(steps[1].completed) setComplete(1, false)
     }
   }, [details])
+
+  useEffect(() => {
+    if(location.lng || location.lat){
+      if(!steps[0].completed) setComplete(0, true)
+    } else {
+      if(steps[0].completed) setComplete(0, false)
+    }
+  }, [location])
 
   const setComplete = (index, status) => {
     setSteps((steps) => {
