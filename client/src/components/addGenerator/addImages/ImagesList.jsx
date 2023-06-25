@@ -19,7 +19,7 @@ const ImagesList = () => {
     dispatch({ type: 'DELETE_IMAGE', payload: image });
     const imageName = image?.split(`${currentUser?.id}%2F`)[1]?.split('?')[0];
     try {
-      await deleteFile(`rooms/${currentUser?.id}/${imageName}`);
+      await deleteFile(`generators/${currentUser?.id}/${imageName}`);
     } catch (error) {
       console.log(error);
     }
