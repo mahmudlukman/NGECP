@@ -34,6 +34,13 @@ const reducer = (state, action) => {
     case 'UPDATE_LOCATION':
       return {...state, location: action.payload}
 
+    case 'RESET_GENERATOR':
+      return {
+        ...state,
+        images: [],
+        details: {company: '', usageType: '', genType: '', power: '', model: '', serialNumber: '',},
+        location: { lng: 0, lat: 0 }}
+
     default:
       throw new Error('No matched action!');
   }

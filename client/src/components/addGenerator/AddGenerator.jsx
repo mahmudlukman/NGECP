@@ -7,7 +7,7 @@ import { useValue } from '../../context/ContextProvider'
 import { Send } from '@mui/icons-material'
 import { createGenerator } from '../../actions/generator'
 
-const AddGenerator = () => {
+const AddGenerator = ({setPage}) => {
   const { state: { images, details, location, currentUser }, dispatch } = useValue()
   const [activeStep, setActiveStep] = useState(0)
   const [steps, setSteps] = useState([
@@ -88,7 +88,7 @@ const AddGenerator = () => {
       serialNumber: details.serialNumber,
       images
     }
-    createGenerator(generator, currentUser, dispatch)
+    createGenerator(generator, currentUser, dispatch, setPage)
   }
 
   return (

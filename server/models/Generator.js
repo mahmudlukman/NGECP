@@ -12,38 +12,26 @@ const GeneratorSchema = mongoose.Schema({
   company: {
     type: String,
     required: true,
-    minLength: 5,
-    maxLength: 150
   },
   usageType: {
     type: String,
     required: true,
-    minLength: 5,
-    maxLength: 150
   },
   genType: {
     type: String,
     required: true,
-    minLength: 5,
-    maxLength: 150
   },
   power: {
     type: String,
     required: true,
-    minLength: 5,
-    maxLength: 150
   },
   model: {
     type: String,
     required: true,
-    minLength: 5,
-    maxLength: 150
   },
   serialNumber: {
     type: String,
     required: true,
-    minLength: 5,
-    maxLength: 150
   },
   images: {
     type: [String],
@@ -58,6 +46,10 @@ const GeneratorSchema = mongoose.Schema({
     required: true,
   },
   uPhoto: {
+    type: String,
+    default: '',
+  },
+  uPhone: {
     type: String,
     default: '',
   },

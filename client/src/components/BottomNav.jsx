@@ -11,6 +11,7 @@ import ClusterMap from './map/ClusterMap'
 import Generators from './generators/Generators'
 import AddGenerator from './addGenerator/AddGenerator'
 import { ref } from 'firebase/storage'
+import Protected from './protected/Protected'
 
 
 const BottomNav = () => {
@@ -23,9 +24,9 @@ const BottomNav = () => {
     <Box ref={ref}>
       {{
         0: <Hero />,
-        1: <ClusterMap />,
-        2: <Generators />,
-        3: <AddGenerator />,
+        1: <Protected><ClusterMap /></Protected>,
+        2: <Protected><Generators /></Protected>,
+        3: <Protected><AddGenerator setPage={setValue}/></Protected> ,
       }[value]}
       <Paper
         elevation={3}
