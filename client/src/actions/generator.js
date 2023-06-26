@@ -12,3 +12,10 @@ export const createGenerator = async (generator, currentUser, dispatch, setPage)
 
   dispatch({type: 'END_LOADING'})
 }
+
+export const getGenerators = async (dispatch) => {
+  const result = await fetchData({url, method: 'GET'}, dispatch)
+  if(result) {
+    dispatch({type: 'UPDATE_GENERATORS', payload: result})
+  }
+}

@@ -7,3 +7,8 @@ export const createGenerator = tryCatch(async(req, res) => {
   await newGenerator.save()
   res.status(201).json({success: true, result: newGenerator})
 })
+
+export const getGenerators = tryCatch(async(req, res) => {
+  const generators = await Generator.find().sort({_id: -1})
+  res.status(200).json({success: true, result: generators})
+})

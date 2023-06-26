@@ -41,6 +41,9 @@ const reducer = (state, action) => {
         details: {company: '', usageType: '', genType: '', power: '', model: '', serialNumber: '',},
         location: { lng: 0, lat: 0 }}
 
+    case 'UPDATE_GENERATORS':
+      return {...state, generators: action.payload}
+
     default:
       throw new Error('No matched action!');
   }
