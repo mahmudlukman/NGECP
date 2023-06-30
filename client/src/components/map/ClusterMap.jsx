@@ -5,6 +5,7 @@ import ReactMapGL, { Marker } from 'react-map-gl';
 import { Avatar, Box, Paper, Tooltip } from '@mui/material'
 import Supercluster from 'supercluster';
 import './cluster.css';
+import GeocoderInput from '../sidebar/GeocoderInput';
 
 const supercluster = new Supercluster({
   radius: 75,
@@ -12,7 +13,7 @@ const supercluster = new Supercluster({
 });
 
 const ClusterMap = () => {
-  const { state: { generators }, dispatch, mapRef } = useValue()
+  const { state: { filteredGenerators }, dispatch, mapRef } = useValue()
   const [points, setPoints] = useState([]);
   const [clusters, setClusters] = useState([]);
   const [bounds, setBounds] = useState([-180, -85, 180, 85]);
@@ -23,7 +24,7 @@ const ClusterMap = () => {
   }, [])
 
   useEffect(() => {
-    const points = generators.map(generator => ({
+    const points = filteredGenerators.map(generator => ({
       type: 'Feature',
       properties: {
         cluster: false,
@@ -47,7 +48,7 @@ const ClusterMap = () => {
       },
     }))
     setPoints(points)
-  }, [generators])
+  }, [filteredGenerators])
 
   useEffect(() => {
     supercluster.load(points)
@@ -125,8 +126,7 @@ const ClusterMap = () => {
             </Marker>
           );
         })}
-        {/* <GeocoderInput />
-        {popupInfo && (
+        {/* {popupInfo && (
           <Popup
             longitude={popupInfo.lng}
             latitude={popupInfo.lat}
@@ -138,6 +138,7 @@ const ClusterMap = () => {
             <PopupRoom {...{ popupInfo }} />
           </Popup>
         )} */}
+        <GeocoderInput />
       </ReactMapGL>
     </Box>
   )
