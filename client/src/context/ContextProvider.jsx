@@ -15,6 +15,7 @@ const initialState = {
   addressFilter: null,
   filteredGenerators: [],
   generator: null,
+  users: [],
 };
 
 const Context = createContext(initialState);

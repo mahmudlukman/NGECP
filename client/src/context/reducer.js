@@ -57,6 +57,9 @@ const reducer = (state, action) => {
     case 'UPDATE_GENERATOR':
       return {...state, generator: action.payload}
 
+    case 'UPDATE_USERS':
+      return {...state, users: action.payload}
+
     default:
       throw new Error('No matched action!');
   }

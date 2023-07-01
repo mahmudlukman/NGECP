@@ -1,19 +1,18 @@
-import Loading from "./components/Loading"
-import Notification from "./components/Notification"
-import Room from "./components/generators/Generator"
-import Login from "./components/user/Login"
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from "./pages/Home/Home"
+import Dashboard from './pages/dashboard/Dashboard'
 
 
 function App() {
 
   return (
     <>
-      <Loading />
-      <Notification />
-      <Login />
-      <Home />
-      <Room />
+      <BrowserRouter>
+        <Routes>
+          <Route path='dashboard/*' element={<Dashboard />} />
+          <Route path='*' element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
