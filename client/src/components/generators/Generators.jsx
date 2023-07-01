@@ -2,7 +2,7 @@ import { Avatar, Card, Container, ImageList, ImageListItem, ImageListItemBar, To
 import { useValue } from '../../context/ContextProvider'
 
 const Generators = () => {
-  const { state: { filteredGenerators } } = useValue()
+  const { state: { filteredGenerators }, dispatch } = useValue()
   return (
     <Container>
       <ImageList
@@ -32,6 +32,7 @@ const Generators = () => {
                 alt={generator.company}
                 loading="lazy"
                 style={{ cursor: 'pointer' }}
+                onClick={() => dispatch({ type: 'UPDATE_GENERATOR', payload: generator })}
               />
               <ImageListItemBar
                 title={generator.usageType}

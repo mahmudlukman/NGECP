@@ -54,6 +54,9 @@ const reducer = (state, action) => {
     case 'CLEAR_ADDRESS':
       return {...state, addressFilter: null, filteredGenerators: state.generators}
 
+    case 'UPDATE_GENERATOR':
+      return {...state, generator: action.payload}
+
     default:
       throw new Error('No matched action!');
   }

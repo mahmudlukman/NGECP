@@ -8,8 +8,7 @@ const Home = () => {
   return (
     <>
       <NavBar />
-     <BottomNav />
-      
+      <BottomNav />
     </>
   )
 }

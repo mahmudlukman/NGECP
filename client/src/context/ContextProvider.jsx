@@ -13,7 +13,8 @@ const initialState = {
   location: { lng: 0, lat: 0 },
   generators: [],
   addressFilter: null,
-  filteredGenerators: []
+  filteredGenerators: [],
+  generator: null,
 };
 
 const Context = createContext(initialState);
