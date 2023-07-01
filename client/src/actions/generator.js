@@ -9,6 +9,7 @@ export const createGenerator = async (generator, currentUser, dispatch, setPage)
   if(result) {dispatch({type: 'UPDATE_ALERT', payload: {open: true, severity: 'success', message: 'The generator has been added successfully'}})}
   dispatch({type: 'RESET_GENERATOR'})
   setPage(0)
+  dispatch({type: 'UPDATE_GENERATOR', payload: result})
 
   dispatch({type: 'END_LOADING'})
 }
