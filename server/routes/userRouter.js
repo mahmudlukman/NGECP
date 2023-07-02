@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { register, login, updateProfile, getUsers } from '../controllers/user.js'
+import { register, login, updateProfile, getUsers, updateStatus } from '../controllers/user.js'
 import auth from '../middleware/auth.js'
 // import checkAccess from '../middleware/checkAccess.js'
 // import userPermissions from '../middleware/permissions/user/userPermissions.js'
@@ -10,6 +10,6 @@ userRouter.post('/register', register)
 userRouter.post('/login', login)
 userRouter.patch('/updateProfile', auth,  updateProfile)
 userRouter.get('/', getUsers)
-// userRouter.patch('/updateStatus/:userId', auth, checkAccess(userPermissions.updateStatus), updateStatus)
+userRouter.patch('/updateStatus/:userId', updateStatus)
 
 export default userRouter
