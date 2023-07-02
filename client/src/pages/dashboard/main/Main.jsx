@@ -15,6 +15,8 @@ import { getGenerators } from '../../../actions/generator';
 import { getUsers } from '../../../actions/user';
 import { useValue } from '../../../context/ContextProvider';
 import moment from 'moment';
+import AreaGeneratorsUsers from './AreaGeneratorUsers'
+import BarGeneratorUsageType from './BarGeneratorUsageType'
 
 const Main = ({ setSelectedLink, link }) => {
   const {
@@ -109,6 +111,12 @@ const Main = ({ setSelectedLink, link }) => {
             ))}
           </List>
         </Box>
+      </Paper> 
+      {/* <Paper elevation={3} sx={{ p: 2, gridColumn: '1/3' }}>
+        <BarGeneratorUsageType />
+      </Paper> */}
+      <Paper elevation={3} sx={{ p: 2, gridColumn: '1/3' }}>
+        <AreaGeneratorsUsers />
       </Paper>
     </Box>
   );
