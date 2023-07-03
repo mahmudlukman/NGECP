@@ -60,6 +60,9 @@ const reducer = (state, action) => {
     case 'UPDATE_USERS':
       return {...state, users: action.payload}
 
+    case 'DELETE_GENERATOR':
+      return {...state, generators: state.generators.filter((generator) => generator._id !== action.payload)}
+
     default:
       throw new Error('No matched action!');
   }

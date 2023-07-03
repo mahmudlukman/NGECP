@@ -20,3 +20,16 @@ export const getGenerators = async (dispatch) => {
     dispatch({type: 'UPDATE_GENERATORS', payload: result})
   }
 }
+
+export const deleteGenerator = async (generator, currentUser, dispatch) => {
+  const result = await fetchData(
+    {url:`${url}/${generator._id}`, method: 'DELETE', token: currentUser?.token},
+    dispatch
+  )
+  if(result) {
+    dispatch({type: 'UPDATE_ALERT', payload: {open: true, severity: 'success', message: 'The generator has been deleted successfully'}})
+    dispatch({type: 'DELETE_GENERATOR', payload: result._id})
+    deleteImages(generator.images, currentUser.id)
+  }
+  dispatch({type: 'END_LOADING'})
+}

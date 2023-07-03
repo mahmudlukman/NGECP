@@ -12,3 +12,13 @@ export const getGenerators = tryCatch(async(req, res) => {
   const generators = await Generator.find().sort({_id: -1})
   res.status(200).json({success: true, result: generators})
 })
+
+export const deleteGenerator = tryCatch(async(req, res) => {
+  const {_id} = await Generator.findByIdAndDelete(req.params.generatorId)
+  res.status(200).json({success: true, result:{_id}})
+})
+
+export const updateGenerator = tryCatch(async(req, res) => {
+  const updatedGenerator = await Generator.findByIdAndUpdate(req.params.generatorId, req.body, {new: true})
+  res.status(200).json({success: true, result: updatedGenerator})
+})
