@@ -5,6 +5,7 @@ import useCheckToken from '../../hooks/useCheckToken'
 import Profile from './Profile'
 import { storeGenerator } from '../../actions/generator'
 import { useEffect } from 'react'
+import { logout } from '../../actions/user'
 
 // eslint-disable-next-line react/prop-types
 const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {

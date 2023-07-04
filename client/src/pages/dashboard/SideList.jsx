@@ -31,6 +31,7 @@ import Requests from './requests/Requests';
 import Generators from './generators/Generators';
 import Users from './users/Users';
 import { logout } from '../../actions/user';
+import { storeGenerator } from '../../actions/generator';
 
 const drawerWidth = 240;
 

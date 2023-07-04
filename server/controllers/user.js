@@ -65,10 +65,10 @@ export const login = tryCatch(async (req, res) => {
 });
 
 export const updateProfile = tryCatch(async (req, res) => {
-  // const fields = req.body?.photoURL
-  //   ? { name: req.body.name, photoURL: req.body.photoURL }
-  //   : { name: req.body.name };
-  const updatedUser = await User.findByIdAndUpdate(req.user.id, req.body, {
+  const fields = req.body?.photoURL
+    ? { name: req.body.name,  phone: req.body.phone, photoURL: req.body.photoURL }
+    : { name: req.body.name, phone: req.body.phone };
+  const updatedUser = await User.findByIdAndUpdate(req.user.id,  fields, {
     new: true,
   });
   const { _id: id, name, photoURL, phone, role } = updatedUser;
