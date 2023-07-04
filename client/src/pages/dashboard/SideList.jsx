@@ -30,6 +30,7 @@ import Messages from './messages/Messages';
 import Requests from './requests/Requests';
 import Generators from './generators/Generators';
 import Users from './users/Users';
+import { logout } from '../../actions/user';
 
 const drawerWidth = 240;
 
@@ -82,7 +83,7 @@ const Drawer = styled(MuiDrawer, {
 
 const SideList = ({ open, setOpen }) => {
   const {
-    state: { currentUser },
+    state: { currentUser, location, details, images, updatedGenerator, deletedImages, addedImages },
     dispatch,
   } = useValue();
 
@@ -127,9 +128,11 @@ const SideList = ({ open, setOpen }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch({ type: 'UPDATE_USER', payload: null });
-    navigate('/');
-  };
+    storeGenerator(location, details, images, updatedGenerator, deletedImages, addedImages, currentUser.id)
+    logout(dispatch)
+    navigate('/')
+  }
+
   return (
     <>
       <Drawer variant="permanent" open={open}>

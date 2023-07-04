@@ -4,11 +4,12 @@ import AddLocation from './addLocation/AddLocation'
 import AddDetails from './addDetails/AddDetails'
 import AddImages from './addImages/AddImages'
 import { useValue } from '../../context/ContextProvider'
-import { Send } from '@mui/icons-material'
-import { createGenerator } from '../../actions/generator'
+import { Cancel, Send } from '@mui/icons-material'
+import { clearGenerator, createGenerator, updateGenerator } from '../../actions/generator'
+import { useNavigate } from 'react-router-dom'
 
-const AddGenerator = ({setPage}) => {
-  const { state: { images, details, location, currentUser }, dispatch } = useValue()
+const AddGenerator = () => {
+  const { state: { images, details, location, currentUser, updatedGenerator, deletedImages, addedImages }, dispatch } = useValue()
   const [activeStep, setActiveStep] = useState(0)
   const [steps, setSteps] = useState([
     { label: 'Location', completed: false },
@@ -88,7 +89,19 @@ const AddGenerator = ({setPage}) => {
       serialNumber: details.serialNumber,
       images
     }
-    createGenerator(generator, currentUser, dispatch, setPage)
+    if (updatedGenerator) return updateGenerator(generator, currentUser, dispatch, updatedGenerator, deletedImages)
+    createGenerator(generator, currentUser, dispatch)
+  }
+
+  const navigate = useNavigate()
+  const handleCancel = () => {
+    if (updatedGenerator) {
+      navigate('/dashboard/generators')
+      clearGenerator(dispatch, currentUser, addedImages, updatedGenerator)
+    } else {
+      dispatch({ type: 'UPDATE_SECTION', payload: 0 })
+      clearGenerator(dispatch, currentUser, images)
+    }
   }
 
   return (
@@ -134,19 +147,18 @@ const AddGenerator = ({setPage}) => {
             Next
           </Button>
         </Stack>
-        {showSubmit && (
-          <Stack
-            sx={{ alignItems: 'center' }}
-          >
+        <Stack
+          sx={{ alignItems: 'center', justifyContent: 'center', gap: 2 }} direction='row'
+        >
+          {showSubmit && (
             <Button
               variant='contained'
               endIcon={<Send />}
               onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </Stack>
-        )}
+            >{updatedGenerator ? 'Update' : 'Submit'}</Button>
+          )}
+          <Button variant='outlined' endIcon={<Cancel />} onClick={handleCancel}>Cancel</Button>
+        </Stack>
       </Box>
     </Container>
   )

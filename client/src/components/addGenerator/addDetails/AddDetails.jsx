@@ -1,7 +1,6 @@
-import { FormControl, FormControlLabel, InputAdornment, Box, Radio, RadioGroup, Stack, TextField, Grid, MenuItem } from '@mui/material'
+import { TextField, Grid, MenuItem } from '@mui/material'
 import { useState } from 'react'
 import { useValue } from '../../../context/ContextProvider'
-import InfoField from './InfoField'
 
 const initialState = {
   company: '',

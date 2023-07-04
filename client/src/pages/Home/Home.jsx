@@ -1,5 +1,5 @@
 import BottomNav from '../../components/BottomNav'
-import Notification from "../../components/Notification"
+import Navbar from "../../components/NavBar"
 import Login from "../../components/user/Login"
 // import { useValue } from '../../context/ContextProvider'
 
@@ -8,7 +8,7 @@ const Home = () => {
   // const {state: {currentUser}} = useValue
   return (
     <>
-      <Notification />
+      <Navbar />
       <Login />
       <BottomNav />
     </>

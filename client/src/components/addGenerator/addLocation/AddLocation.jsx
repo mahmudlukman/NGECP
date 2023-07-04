@@ -11,26 +11,23 @@ const AddLocation = () => {
   const mapRef = useRef()
 
   useEffect(() => {
-    // const storedLocation = JSON.parse(localStorage.getItem(currentUser.id))?.location
-    if (!lng && !lat) {
+    const storedLocation = JSON.parse(localStorage.getItem(currentUser.id))?.location
+    if (!lng && !lat && !storedLocation?.lng && !storedLocation?.lat) {
       fetch('https://ipapi.co/json').then(response => {
         return response.json()
       }).then(data => {
-       mapRef.current.flyTo({
-        center: [data.longitude, data.latitude]
-       })
-       dispatch({ type: 'UPDATE_LOCATION', payload: { lng: data.longitude, lat: data.latitude } })
+        dispatch({ type: 'UPDATE_LOCATION', payload: { lng: data.longitude, lat: data.latitude } })
       })
     }
   }, [])
-   
-  // useEffect(() => {
-  //   if ((lng || lat) && mapRef.current) {
-  //     mapRef.current.flyTo({
-  //       center: [lng, lat]
-  //     })
-  //   }
-  // }, [lng, lat])
+
+  useEffect(() => {
+    if ((lng || lat) && mapRef.current) {
+      mapRef.current.flyTo({
+        center: [lng, lat]
+      })
+    }
+  }, [lng, lat])
 
   return (
     <Box
