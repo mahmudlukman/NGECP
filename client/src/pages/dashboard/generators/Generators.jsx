@@ -6,6 +6,7 @@ import { getGenerators } from '../../../actions/generator';
 import moment from 'moment';
 import { grey } from '@mui/material/colors';
 import GeneratorsActions from './GeneratorsActions';
+import isAdmin from '../utils/isAdmin';
 // import isAdmin from '../utils/isAdmin';
 
 // eslint-disable-next-line react/prop-types
@@ -87,7 +88,9 @@ const Generators = ({ setSelectedLink, link }) => {
       </Typography>
       <DataGrid
         columns={columns}
-        rows={generators}
+        rows={isAdmin(currentUser)
+           ? generators
+           : generators.filter((generator) => generator.uid === currentUser.id)}
         getRowId={(row) => row._id}
         rowsPerPageOptions={[5, 10, 20]}
         pageSize={pageSize}

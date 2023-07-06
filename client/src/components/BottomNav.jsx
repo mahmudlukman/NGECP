@@ -1,11 +1,7 @@
 import { AddLocationAlt, LocationOn, AddHome, Handyman } from '@mui/icons-material'
 import { BottomNavigation, BottomNavigationAction, Box, Paper } from '@mui/material'
 import { useRef, useEffect } from 'react'
-// import ClusterMap from './map/ClusterMap'
-// import Rooms from './rooms/Rooms'
-// import AddRoom from './addRoom/AddRoom'
-// import Protected from './protected/Protected'
-import { useState } from 'react'
+
 import Hero from './hero/Hero'
 import ClusterMap from './map/ClusterMap'
 import Generators from './generators/Generators'

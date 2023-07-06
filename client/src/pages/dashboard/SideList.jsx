@@ -32,6 +32,8 @@ import Generators from './generators/Generators';
 import Users from './users/Users';
 import { logout } from '../../actions/user';
 import { storeGenerator } from '../../actions/generator';
+import useCheckToken from '../../hooks/useCheckToken'
+import isAdmin from './utils/isAdmin';
 
 const drawerWidth = 240;
 
@@ -83,6 +85,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const SideList = ({ open, setOpen }) => {
+  useCheckToken()
   const {
     state: { currentUser, location, details, images, updatedGenerator, deletedImages, addedImages },
     dispatch,
@@ -92,18 +95,20 @@ const SideList = ({ open, setOpen }) => {
 
   const list = useMemo(
     () => [
-      {
-        title: 'Main',
-        icon: <Dashboard />,
-        link: '',
-        component: <Main {...{ setSelectedLink, link: '' }} />,
-      },
-      {
-        title: 'Users',
-        icon: <PeopleAlt />,
-        link: 'users',
-        component: <Users {...{ setSelectedLink, link: 'users' }} />,
-      },
+      ...isAdmin(currentUser) ? [
+        {
+          title: 'Main',
+          icon: <Dashboard />,
+          link: '',
+          component: <Main {...{ setSelectedLink, link: '' }} />,
+        },
+        {
+          title: 'Users',
+          icon: <PeopleAlt />,
+          link: 'users',
+          component: <Users {...{ setSelectedLink, link: 'users' }} />,
+        },
+      ] : [],
       {
         title: 'Rooms',
         icon: <Handyman />,
@@ -131,7 +136,6 @@ const SideList = ({ open, setOpen }) => {
   const handleLogout = () => {
     storeGenerator(location, details, images, updatedGenerator, deletedImages, addedImages, currentUser.id)
     logout(dispatch)
-    navigate('/')
   }
 
   return (
@@ -200,6 +204,11 @@ const SideList = ({ open, setOpen }) => {
           {list.map((item) => (
             <Route key={item.title} path={item.link} element={item.component} />
           ))}
+          <Route path='*' element={isAdmin(currentUser) ? (
+            <Main {...{setSelectedLink, link: ''}}/>
+          ):(
+            <Generators {...{setSelectedLink, link: 'generators'}}/>
+          )}/>
         </Routes>
       </Box>
     </>

@@ -20,13 +20,13 @@ import BarGeneratorUsageType from './BarGeneratorUsageType'
 
 const Main = ({ setSelectedLink, link }) => {
   const {
-    state: { generators, users },
+    state: { generators, users, currentUser },
     dispatch,
   } = useValue();
   useEffect(() => {
     setSelectedLink(link);
     if (generators.length === 0) getGenerators(dispatch);
-    if (users.length === 0) getUsers(dispatch);
+    if (users.length === 0) getUsers(dispatch, currentUser);
   }, []);
   return (
     <Box
