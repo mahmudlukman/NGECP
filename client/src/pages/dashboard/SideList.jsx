@@ -2,6 +2,7 @@ import {
   ChevronLeft,
   Dashboard,
   Handyman,
+  LocationOn,
   Logout,
   MarkChatUnread,
   NotificationsActive,
@@ -27,13 +28,13 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useValue } from '../../context/ContextProvider';
 import Main from './main/Main';
 import Messages from './messages/Messages';
-import Requests from './requests/Requests';
 import Generators from './generators/Generators';
 import Users from './users/Users';
 import { logout } from '../../actions/user';
 import { storeGenerator } from '../../actions/generator';
 import useCheckToken from '../../hooks/useCheckToken'
 import isAdmin from './utils/isAdmin';
+import ClusterMap from './map/ClusterMap';
 
 const drawerWidth = 240;
 
@@ -103,6 +104,12 @@ const SideList = ({ open, setOpen }) => {
           component: <Main {...{ setSelectedLink, link: '' }} />,
         },
         {
+          title: 'Map',
+          icon: <LocationOn />,
+          link: 'map',
+          component: <ClusterMap {...{ setSelectedLink, link: 'map' }} />,
+        },
+        {
           title: 'Users',
           icon: <PeopleAlt />,
           link: 'users',
@@ -110,16 +117,10 @@ const SideList = ({ open, setOpen }) => {
         },
       ] : [],
       {
-        title: 'Rooms',
+        title: 'Generators',
         icon: <Handyman />,
         link: 'generators',
         component: <Generators {...{ setSelectedLink, link: 'generators' }} />,
-      },
-      {
-        title: 'Requests',
-        icon: <NotificationsActive />,
-        link: 'requests',
-        component: <Requests {...{ setSelectedLink, link: 'requests' }} />,
       },
       {
         title: 'Messages',
