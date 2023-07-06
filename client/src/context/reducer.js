@@ -95,5 +95,5 @@ const applyFilter = (generators, address) => {
     });
   }
 
-  filteredGenerators
+  return filteredGenerators
 };

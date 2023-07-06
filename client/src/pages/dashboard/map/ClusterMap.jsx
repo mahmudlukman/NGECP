@@ -5,6 +5,7 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import { Avatar, Box, Paper, Tooltip } from '@mui/material'
 import Supercluster from 'supercluster';
 import './cluster.css';
+import GeocoderInput from './GeocoderInput';
 // import GeocoderInput from '../sidebar/GeocoderInput';
 // import PopupGenerator from './PopupGenerator';
 
@@ -15,7 +16,7 @@ const supercluster = new Supercluster({
 });
 
 const ClusterMap = ({ setSelectedLink, link }) => {
-  const { state: { filteredGenerators }, dispatch, mapRef } = useValue()
+  const { state: { filteredGenerators }, dispatch, mapRef, containerRef } = useValue()
 
   const [points, setPoints] = useState([]);
   const [clusters, setClusters] = useState([]);
@@ -32,7 +33,7 @@ const ClusterMap = ({ setSelectedLink, link }) => {
   }, [])
 
   useEffect(() => {
-    const points = filteredGenerators.map(generator => ({
+    const points = filteredGenerators.map((generator) => ({
       type: 'Feature',
       properties: {
         cluster: false,
@@ -72,10 +73,13 @@ const ClusterMap = ({ setSelectedLink, link }) => {
   return (
     <Box
       sx={{
-        height: '90vh',
+        height: '83vh',
         position: 'relative'
       }}
     >
+      <Box sx={{ width: 240, p: 3 }}>
+        <Box ref={containerRef}></Box>
+      </Box>
       <ReactMapGL
         initialViewState={{ latitude: 51.5072, longitude: 0.1276 }}
         mapboxAccessToken={import.meta.env.VITE_REACT_APP_MAP_TOKEN}
@@ -134,19 +138,8 @@ const ClusterMap = ({ setSelectedLink, link }) => {
             </Marker>
           );
         })}
-        {/* {popupInfo && (
-          <Popup
-            longitude={popupInfo.lng}
-            latitude={popupInfo.lat}
-            maxWidth="auto"
-            closeOnClick={false}
-            focusAfterOpen={false}
-            onClose={() => setPopupInfo(null)}
-          >
-            <PopupGenerator {...{ popupInfo }} />
-          </Popup>
-        )}
-        <GeocoderInput /> */}
+        
+        <GeocoderInput />
       </ReactMapGL>
     </Box>
   )
