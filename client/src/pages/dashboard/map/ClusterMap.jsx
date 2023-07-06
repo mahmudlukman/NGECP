@@ -6,6 +6,7 @@ import { Avatar, Box, Paper, Tooltip } from '@mui/material'
 import Supercluster from 'supercluster';
 import './cluster.css';
 import GeocoderInput from './GeocoderInput';
+import PopupGenerator from './PopupGenerator';
 // import GeocoderInput from '../sidebar/GeocoderInput';
 // import PopupGenerator from './PopupGenerator';
 
@@ -77,9 +78,6 @@ const ClusterMap = ({ setSelectedLink, link }) => {
         position: 'relative'
       }}
     >
-      <Box sx={{ width: 240, p: 3 }}>
-        <Box ref={containerRef}></Box>
-      </Box>
       <ReactMapGL
         initialViewState={{ latitude: 51.5072, longitude: 0.1276 }}
         mapboxAccessToken={import.meta.env.VITE_REACT_APP_MAP_TOKEN}
@@ -87,6 +85,9 @@ const ClusterMap = ({ setSelectedLink, link }) => {
         ref={mapRef}
         onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
       >
+        <Box sx={{ width: 240, p: 3 }}>
+          <Box ref={containerRef}></Box>
+        </Box>
         {clusters.map((cluster) => {
           const { cluster: isCluster, point_count } = cluster.properties;
           const [longitude, latitude] = cluster.geometry.coordinates;
@@ -132,14 +133,25 @@ const ClusterMap = ({ setSelectedLink, link }) => {
                   src={cluster.properties.uPhoto}
                   component={Paper}
                   elevation={2}
-                  // onClick={() => setPopupInfo(cluster.properties)}
+                  onClick={() => setPopupInfo(cluster.properties)}
                 />
               </Tooltip>
             </Marker>
           );
         })}
-        
         <GeocoderInput />
+        {popupInfo && (
+          <Popup
+            longitude={popupInfo.lng}
+            latitude={popupInfo.lat}
+            maxWidth="auto"
+            closeOnClick={false}
+            focusAfterOpen={false}
+            onClose={() => setPopupInfo(null)}
+          >
+            <PopupGenerator {...{ popupInfo }} />
+          </Popup>
+        )}
       </ReactMapGL>
     </Box>
   )

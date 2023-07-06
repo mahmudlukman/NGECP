@@ -51,7 +51,7 @@ export const updateGenerator = async (generator, currentUser, dispatch, updatedG
 
 export const clearGenerator = (dispatch, currentUser, images=[], updatedGenerator=null) => {
   dispatch({type: 'RESET_GENERATOR'})
-  localStorage.removeItem(currentUser.id)
+  localStorage.removeItem(currentUser?.id)
   if(updatedGenerator) {
     deleteImages(images, updateGenerator.uid)
   }else{
