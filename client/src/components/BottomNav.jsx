@@ -21,9 +21,9 @@ const BottomNav = () => {
     <Box ref={ref}>
       {{
         0: <Hero />,
-        1: <Protected><ClusterMap /></Protected>,
-        2: <Protected><Generators /></Protected>,
-        3: <Protected><AddGenerator /></Protected>,
+        // 1: <Protected><ClusterMap /></Protected>,
+        // 2: <Protected><Generators /></Protected>,
+        1: <Protected><AddGenerator /></Protected>,
       }[section]}
       <Paper
         elevation={3}
@@ -36,8 +36,8 @@ const BottomNav = () => {
           sx={{ "&.Mui-selected": { color: '#388e3c' } }}
         >
           <BottomNavigationAction label='Home' icon={<AddHome />} sx={{ "&.Mui-selected": { color: '#388e3c' } }} />
-          <BottomNavigationAction label='Map' icon={<LocationOn />} sx={{ "&.Mui-selected": { color: '#388e3c' } }} />
-          <BottomNavigationAction label='Generators' icon={<Handyman />} sx={{ "&.Mui-selected": { color: '#388e3c' } }} />
+          {/* <BottomNavigationAction label='Map' icon={<LocationOn />} sx={{ "&.Mui-selected": { color: '#388e3c' } }} /> */}
+          {/* <BottomNavigationAction label='Generators' icon={<Handyman />} sx={{ "&.Mui-selected": { color: '#388e3c' } }} /> */}
           <BottomNavigationAction label='Add' icon={<AddLocationAlt sx={{ "&.Mui-selected": { color: '#388e3c' } }} />} />
         </BottomNavigation>
       </Paper>
