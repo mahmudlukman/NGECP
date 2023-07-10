@@ -31,14 +31,6 @@ const NavBar = () => {
             >
               NCECP
             </Typography>
-            {/* <Typography
-            variant="h6"
-            component="h1"
-            noWrap
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            NCECP
-          </Typography> */}
             {!currentUser ? (
               <Button color="inherit" startIcon={<Lock />} onClick={() => dispatch({ type: 'OPEN_LOGIN' })}>
                 Login

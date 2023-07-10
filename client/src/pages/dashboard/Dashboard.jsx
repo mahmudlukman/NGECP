@@ -10,7 +10,7 @@ import {
   useTheme
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import { Brightness4, Brightness7, Home, Menu } from '@mui/icons-material';
+import { Brightness4, Brightness7, DarkModeOutlined, Home, LightModeOutlined, Menu } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideList from './SideList';
@@ -90,12 +90,16 @@ export default function Dashboard() {
               noWrap
               component="div"
               sx={{ flexGrow: 1 }}
-            >
+            >git
               NGECP
             </Typography>
             <Box sx={{ gap: '1rem' }}>
-              <IconButton onClick={() => setDark(!dark)}>
-                {dark ? <Brightness7 /> : <Brightness4 />}
+              <IconButton onClick={() => dispatch({type: 'SET_MODE'})}>
+                {theme.palette.mode === 'dark' ? (
+                  <DarkModeOutlined sx={{ fontSize: "25px" }} />
+                ) : (
+                  <LightModeOutlined sx={{ fontSize: "25px" }} />
+                )}
               </IconButton>
             </Box>
 
