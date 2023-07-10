@@ -3,6 +3,7 @@ import reducer from './reducer';
 import { useRef } from 'react';
 
 const initialState = {
+  mode: 'dark',
   currentUser: null,
   openLogin: false,
   loading: false,

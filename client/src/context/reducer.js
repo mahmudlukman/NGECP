@@ -1,5 +1,7 @@
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SET_MODE':
+      return {...state, mode: state.mode === 'light' ? 'dark' : 'light'}
     case 'OPEN_LOGIN':
       return { ...state, openLogin: true };
     case 'CLOSE_LOGIN':

@@ -21,6 +21,7 @@ import {
   styled,
   Tooltip,
   Typography,
+  useTheme
 } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
 import { useMemo, useState } from 'react';
@@ -91,6 +92,7 @@ const SideList = ({ open, setOpen }) => {
     state: { currentUser, location, details, images, updatedGenerator, deletedImages, addedImages },
     dispatch,
   } = useValue();
+  const theme = useTheme()
 
   const [selectedLink, setSelectedLink] = useState('');
 
@@ -141,14 +143,25 @@ const SideList = ({ open, setOpen }) => {
 
   return (
     <>
-      <Drawer variant="permanent" open={open}>
+      <Drawer 
+        variant="permanent" 
+        open={open} 
+        sx={{
+          width: drawerWidth,
+          "& .MuiDrawer-paper": {
+            color: theme.palette.secondary[200],
+            backgroundColor: theme.palette.background.alt,
+            boxSizing: "border-box",
+          }
+        }}
+      >
         <DrawerHeader>
           <IconButton onClick={() => setOpen(false)}>
             <ChevronLeft />
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List >
           {list.map((item) => (
             <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
               <ListItemButton

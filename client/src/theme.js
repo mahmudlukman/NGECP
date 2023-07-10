@@ -17,15 +17,15 @@ export const tokensDark = {
   },
   primary: {
     // blue
-    100: "#d3d4de",
-    200: "#a6a9be",
-    300: "#7a7f9d",
-    400: "#4d547d",
-    500: "#21295c",
-    600: "#191F45", // manually adjusted
-    700: "#141937",
-    800: "#0d1025",
-    900: "#070812",
+    100: "#040509",
+    200: "#080b12",
+    300: "#0c101b",
+    400: "#f2f0f0", // manually changed
+    500: "#141b2d",
+    600: "#1F2A40",
+    700: "#727681",
+    800: "#a1a4ab",
+    900: "#d0d1d5",
   },
   secondary: {
     // yellow
@@ -40,6 +40,7 @@ export const tokensDark = {
     800: "#665429",
     900: "#332a14",
   },
+  
 };
 
 // function that reverses the color palette

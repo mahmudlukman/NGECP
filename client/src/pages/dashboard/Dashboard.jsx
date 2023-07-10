@@ -1,4 +1,4 @@
-import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
+import { createTheme, styled } from '@mui/material/styles';
 import {
   Box,
   Toolbar,
@@ -6,6 +6,8 @@ import {
   Typography,
   IconButton,
   Tooltip,
+  Button,
+  useTheme
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import { Brightness4, Brightness7, Home, Menu } from '@mui/icons-material';
@@ -14,6 +16,8 @@ import { useNavigate } from 'react-router-dom';
 import SideList from './SideList';
 import Protected from '../../components/protected/Protected'
 import Login from '../../components/user/Login'
+import { useValue } from '../../context/ContextProvider';
+
 
 const drawerWidth = 240;
 
@@ -38,6 +42,9 @@ const AppBar = styled(MuiAppBar, {
 export default function Dashboard() {
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(true);
+  const theme = useTheme()
+  const { state: { mode, currentUser }, dispatch } = useValue()
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
 
   const darkTheme = useMemo(
     () =>
@@ -55,10 +62,9 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
   return (
-    <ThemeProvider theme={darkTheme}>
+    <>
       <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="fixed" open={open}>
+        <AppBar sx={{position:"fixed", background: 'none'}} open={open}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -85,9 +91,24 @@ export default function Dashboard() {
             >
               Dashboard
             </Typography>
-            <IconButton onClick={() => setDark(!dark)}>
+
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textTransform: 'none', gap: '1rem' }}>
+              <Box component="img" alt="profile" src={currentUser?.photoURL} height="32px" width="32px" borderRadius="50%" sx={{ objectFit: "cover" }} />
+              <Box textAlign="left">
+                <Typography fontWeight="bold" fontSize="0.85rem" sx={{ colo: theme.palette.secondary[100] }}>
+                  {currentUser?.name}
+                </Typography>
+                <Typography fontSize="0.75rem" sx={{ colo: theme.palette.secondary[200] }}>
+                  {currentUser?.role}
+                </Typography>
+              </Box>
+              </Box>
+              <Box sx={{gap: '1rem'}}> 
+                <IconButton onClick={() => setDark(!dark)}>
               {dark ? <Brightness7 /> : <Brightness4 />}
             </IconButton>
+            </Box>
+
           </Toolbar>
         </AppBar>
         <Protected>
@@ -95,6 +116,6 @@ export default function Dashboard() {
         </Protected>
       </Box>
       <Login />
-    </ThemeProvider>
+      </>
   );
 }
