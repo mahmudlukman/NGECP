@@ -64,7 +64,7 @@ export default function Dashboard() {
   return (
     <>
       <Box sx={{ display: 'flex' }}>
-        <AppBar sx={{position:"fixed", background: 'none'}} open={open}>
+        <AppBar sx={{ position: "fixed", background: 'none' }} open={open}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -85,28 +85,18 @@ export default function Dashboard() {
             </Tooltip>
             <Typography
               variant="h6"
+              color={theme.palette.secondary.main}
+              fontWeight="bold"
               noWrap
               component="div"
               sx={{ flexGrow: 1 }}
             >
-              Dashboard
+              NGECP
             </Typography>
-
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textTransform: 'none', gap: '1rem' }}>
-              <Box component="img" alt="profile" src={currentUser?.photoURL} height="32px" width="32px" borderRadius="50%" sx={{ objectFit: "cover" }} />
-              <Box textAlign="left">
-                <Typography fontWeight="bold" fontSize="0.85rem" sx={{ colo: theme.palette.secondary[100] }}>
-                  {currentUser?.name}
-                </Typography>
-                <Typography fontSize="0.75rem" sx={{ colo: theme.palette.secondary[200] }}>
-                  {currentUser?.role}
-                </Typography>
-              </Box>
-              </Box>
-              <Box sx={{gap: '1rem'}}> 
-                <IconButton onClick={() => setDark(!dark)}>
-              {dark ? <Brightness7 /> : <Brightness4 />}
-            </IconButton>
+            <Box sx={{ gap: '1rem' }}>
+              <IconButton onClick={() => setDark(!dark)}>
+                {dark ? <Brightness7 /> : <Brightness4 />}
+              </IconButton>
             </Box>
 
           </Toolbar>
@@ -116,6 +106,6 @@ export default function Dashboard() {
         </Protected>
       </Box>
       <Login />
-      </>
+    </>
   );
 }

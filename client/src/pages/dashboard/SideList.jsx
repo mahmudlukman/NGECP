@@ -143,15 +143,14 @@ const SideList = ({ open, setOpen }) => {
 
   return (
     <>
-      <Drawer 
-        variant="permanent" 
-        open={open} 
+      <Drawer
+        variant="permanent"
+        open={open}
         sx={{
-          width: drawerWidth,
           "& .MuiDrawer-paper": {
             color: theme.palette.secondary[200],
             backgroundColor: theme.palette.background.alt,
-            boxSizing: "border-box",
+            // boxSizing: "border-box",
           }
         }}
       >
@@ -161,35 +160,37 @@ const SideList = ({ open, setOpen }) => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List >
-          {list.map((item) => (
-            <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-                onClick={() => navigate(item.link)}
-                selected={selectedLink === item.link}
-              >
-                <ListItemIcon
+        <Box>
+          <List >
+            {list.map((item) => (
+              <ListItem key={item.title} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
+                  onClick={() => navigate(item.link)}
+                  selected={selectedLink === item.link}
                 >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.title}
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.title}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
         <Divider />
         <Box sx={{ mx: 'auto', mt: 3, mb: 1 }}>
           <Tooltip title={currentUser?.name || ''}>
@@ -219,10 +220,10 @@ const SideList = ({ open, setOpen }) => {
             <Route key={item.title} path={item.link} element={item.component} />
           ))}
           <Route path='*' element={isAdmin(currentUser) ? (
-            <Main {...{setSelectedLink, link: ''}}/>
-          ):(
-            <Generators {...{setSelectedLink, link: 'generators'}}/>
-          )}/>
+            <Main {...{ setSelectedLink, link: '' }} />
+          ) : (
+            <Generators {...{ setSelectedLink, link: 'generators' }} />
+          )} />
         </Routes>
       </Box>
     </>

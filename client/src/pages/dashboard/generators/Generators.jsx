@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Avatar, Box, Tooltip, Typography } from '@mui/material';
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { Avatar, Box, Button, Tooltip, useTheme } from '@mui/material';
+import { AddCircle } from '@mui/icons-material';
+import { DataGrid } from '@mui/x-data-grid';
 import { useValue } from '../../../context/ContextProvider';
 import { getGenerators } from '../../../actions/generator';
-import moment from 'moment';
-import { grey } from '@mui/material/colors';
 import GeneratorsActions from './GeneratorsActions';
 import isAdmin from '../utils/isAdmin';
-// import isAdmin from '../utils/isAdmin';
+import Header from '../../../components/Header';
+import FlexBetween from '../../../components/FlexBetween'
 
 // eslint-disable-next-line react/prop-types
 const Generators = ({ setSelectedLink, link }) => {
@@ -15,6 +15,8 @@ const Generators = ({ setSelectedLink, link }) => {
     state: { generators, currentUser },
     dispatch,
   } = useValue();
+
+  const theme = useTheme();
 
   const [pageSize, setPageSize] = useState(5);
 
@@ -51,13 +53,6 @@ const Generators = ({ setSelectedLink, link }) => {
           </Tooltip>
         )
       },
-      // {
-      //   field: 'createdAt',
-      //   headerName: 'Created At',
-      //   width: 200,
-      //   renderCell: (params) =>
-      //     moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS'),
-      // },
       { field: '_id', hide: true },
       {
         field: 'actions',
@@ -73,39 +68,68 @@ const Generators = ({ setSelectedLink, link }) => {
   );
 
   return (
-    <Box
-      sx={{
-        height: 400,
-        width: '100%',
-      }}
-    >
-      <Typography
-        variant="h3"
-        component="h3"
-        sx={{ textAlign: 'center', mt: 3, mb: 3 }}
-      >
-        Manage Generators
-      </Typography>
-      <DataGrid
-        columns={columns}
-        rows={isAdmin(currentUser)
-           ? generators
-           : generators.filter((generator) => generator.uid === currentUser.id)}
-        getRowId={(row) => row._id}
-        rowsPerPageOptions={[5, 10, 20]}
-        pageSize={pageSize}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        getRowSpacing={(params) => ({
-          top: params.isFirstVisible ? 0 : 5,
-          bottom: params.isLastVisible ? 0 : 5,
-        })}
+    <Box m="1.5rem 2.5rem">
+      <FlexBetween>
+        <Header title="GENERATORS" subtitle="List of All Generators" />
+        <Box>
+          <Button
+            sx={{
+              backgroundColor: theme.palette.secondary.light,
+              color: theme.palette.background.alt,
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+          >
+            <AddCircle sx={{ mr: "10px" }} />
+            Add New
+          </Button>
+        </Box>
+      </FlexBetween>
+      <Box
+        mt="40px"
+        height="65vh"
         sx={{
-          [`& .${gridClasses.row}`]: {
-            bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? grey[200] : grey[900],
+          "& .MuiDataGrid-root": {
+            border: "none",
+            borderRadius: "5rem"
           },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: theme.palette.background.alt,
+            color: theme.palette.secondary[100],
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: theme.palette.background.alt,
+          },
+          "& .MuiDataGrid-footerContainer": {
+            backgroundColor: theme.palette.background.alt,
+            color: theme.palette.secondary[100],
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${theme.palette.secondary[200]} !important`,
+          }
         }}
-      />
+      >
+        <DataGrid
+          columns={columns}
+          rows={isAdmin(currentUser)
+            ? generators
+            : generators.filter((generator) => generator.uid === currentUser.id)}
+          getRowId={(row) => row._id}
+          rowsPerPageOptions={[5, 10, 20]}
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          getRowSpacing={(params) => ({
+            top: params.isFirstVisible ? 0 : 5,
+            bottom: params.isLastVisible ? 0 : 5,
+          })}
+        />
+      </Box>
     </Box>
   );
 };

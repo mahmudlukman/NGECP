@@ -1,17 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Avatar, Box, Typography } from '@mui/material';
+import { Avatar, Box, Typography, useTheme } from '@mui/material';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { useValue } from '../../../context/ContextProvider';
 import { getUsers } from '../../../actions/user';
 import moment from 'moment';
 import { grey } from '@mui/material/colors';
 import UsersActions from './UsersActions';
+import Header from '../../../components/Header';
 
 const Users = ({ setSelectedLink, link }) => {
   const {
     state: { users, currentUser },
     dispatch,
   } = useValue();
+
+  const theme = useTheme();
 
   const [pageSize, setPageSize] = useState(5);
   const [rowId, setRowId] = useState(null);
@@ -70,38 +73,51 @@ const Users = ({ setSelectedLink, link }) => {
   );
 
   return (
-    <Box
-      sx={{
-        height: 400,
-        width: '100%',
-      }}
-    >
-      <Typography
-        variant="h3"
-        component="h3"
-        sx={{ textAlign: 'center', mt: 3, mb: 3 }}
-      >
-        Manage Users
-      </Typography>
-      <DataGrid
-        columns={columns}
-        rows={users}
-        getRowId={(row) => row._id}
-        rowsPerPageOptions={[5, 10, 20]}
-        pageSize={pageSize}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        getRowSpacing={(params) => ({
-          top: params.isFirstVisible ? 0 : 5,
-          bottom: params.isLastVisible ? 0 : 5,
-        })}
+    <Box m="1.5rem 2.5rem">
+      <Header title="USERS" subtitle="List of All Users" />
+      <Box
+        mt="40px"
+        height="65vh"
         sx={{
-          [`& .${gridClasses.row}`]: {
-            bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? grey[200] : grey[900],
+          "& .MuiDataGrid-root": {
+            border: "none",
+            borderRadius: "5rem"
           },
+          "& .MuiDataGrid-cell": {
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-columnHeaders": {
+            backgroundColor: theme.palette.background.alt,
+            color: theme.palette.secondary[100],
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-virtualScroller": {
+            backgroundColor: theme.palette.background.alt,
+          },
+          "& .MuiDataGrid-footerContainer": {
+            backgroundColor: theme.palette.background.alt,
+            color: theme.palette.secondary[100],
+            borderBottom: "none"
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${theme.palette.secondary[200]} !important`,
+          }
         }}
-        onCellEditCommit={(params) => setRowId(params.id)}
-      />
+      >
+        <DataGrid
+          columns={columns}
+          rows={users}
+          getRowId={(row) => row._id}
+          rowsPerPageOptions={[5, 10, 20]}
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          getRowSpacing={(params) => ({
+            top: params.isFirstVisible ? 0 : 5,
+            bottom: params.isLastVisible ? 0 : 5,
+          })}
+          onCellEditCommit={(params) => setRowId(params.id)}
+        />
+      </Box>
     </Box>
   );
 };

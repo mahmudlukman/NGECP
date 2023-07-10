@@ -72,87 +72,89 @@ const ClusterMap = ({ setSelectedLink, link }) => {
   }, [mapRef?.current])
 
   return (
-    <Box
-      sx={{
-        height: '83vh',
-        position: 'relative'
-      }}
-    >
-      <ReactMapGL
-        initialViewState={{ latitude: 51.5072, longitude: 0.1276 }}
-        mapboxAccessToken={import.meta.env.VITE_REACT_APP_MAP_TOKEN}
-        mapStyle='mapbox://styles/mapbox/streets-v11'
-        ref={mapRef}
-        onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
+    <Box m="1.5rem 2.5rem">
+      <Box
+        sx={{
+          height: '83vh',
+          position: 'relative'
+        }}
       >
-        <Box sx={{ width: 240, p: 3 }}>
-          <Box ref={containerRef}></Box>
-        </Box>
-        {clusters.map((cluster) => {
-          const { cluster: isCluster, point_count } = cluster.properties;
-          const [longitude, latitude] = cluster.geometry.coordinates;
-          if (isCluster) {
+        <ReactMapGL
+          initialViewState={{ latitude: 51.5072, longitude: 0.1276 }}
+          mapboxAccessToken={import.meta.env.VITE_REACT_APP_MAP_TOKEN}
+          mapStyle='mapbox://styles/mapbox/streets-v11'
+          ref={mapRef}
+          onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
+        >
+          <Box sx={{ width: 240, p: 3 }}>
+            <Box ref={containerRef}></Box>
+          </Box>
+          {clusters.map((cluster) => {
+            const { cluster: isCluster, point_count } = cluster.properties;
+            const [longitude, latitude] = cluster.geometry.coordinates;
+            if (isCluster) {
+              return (
+                <Marker
+                  key={`cluster-${cluster.id}`}
+                  longitude={longitude}
+                  latitude={latitude}
+                >
+                  <div
+                    className="cluster-marker"
+                    style={{
+                      width: `${10 + (point_count / points.length) * 20}px`,
+                      height: `${10 + (point_count / points.length) * 20}px`,
+                    }}
+                    onClick={() => {
+                      const zoom = Math.min(
+                        supercluster.getClusterExpansionZoom(cluster.id),
+                        20
+                      );
+                      mapRef.current.flyTo({
+                        center: [longitude, latitude],
+                        zoom,
+                        speed: 1,
+                      });
+                    }}
+                  >
+                    {point_count}
+                  </div>
+                </Marker>
+              );
+            }
+
             return (
               <Marker
-                key={`cluster-${cluster.id}`}
+                key={`generator-${cluster.properties.generatorId}`}
                 longitude={longitude}
                 latitude={latitude}
               >
-                <div
-                  className="cluster-marker"
-                  style={{
-                    width: `${10 + (point_count / points.length) * 20}px`,
-                    height: `${10 + (point_count / points.length) * 20}px`,
-                  }}
-                  onClick={() => {
-                    const zoom = Math.min(
-                      supercluster.getClusterExpansionZoom(cluster.id),
-                      20
-                    );
-                    mapRef.current.flyTo({
-                      center: [longitude, latitude],
-                      zoom,
-                      speed: 1,
-                    });
-                  }}
-                >
-                  {point_count}
-                </div>
+                <Tooltip title={cluster.properties.uName}>
+                  <Avatar
+                    src={cluster.properties.uPhoto}
+                    component={Paper}
+                    elevation={2}
+                    onClick={() => setPopupInfo(cluster.properties)}
+                  />
+                </Tooltip>
               </Marker>
             );
-          }
-
-          return (
-            <Marker
-              key={`generator-${cluster.properties.generatorId}`}
-              longitude={longitude}
-              latitude={latitude}
+          })}
+          <GeocoderInput />
+          {popupInfo && (
+            <Popup
+              longitude={popupInfo.lng}
+              latitude={popupInfo.lat}
+              maxWidth="auto"
+              closeOnClick={false}
+              focusAfterOpen={false}
+              onClose={() => setPopupInfo(null)}
             >
-              <Tooltip title={cluster.properties.uName}>
-                <Avatar
-                  src={cluster.properties.uPhoto}
-                  component={Paper}
-                  elevation={2}
-                  onClick={() => setPopupInfo(cluster.properties)}
-                />
-              </Tooltip>
-            </Marker>
-          );
-        })}
-        <GeocoderInput />
-        {popupInfo && (
-          <Popup
-            longitude={popupInfo.lng}
-            latitude={popupInfo.lat}
-            maxWidth="auto"
-            closeOnClick={false}
-            focusAfterOpen={false}
-            onClose={() => setPopupInfo(null)}
-          >
-            <PopupGenerator {...{ popupInfo }} />
-          </Popup>
-        )}
-      </ReactMapGL>
+              <PopupGenerator {...{ popupInfo }} />
+            </Popup>
+          )}
+        </ReactMapGL>
+      </Box>
     </Box>
   )
 }
