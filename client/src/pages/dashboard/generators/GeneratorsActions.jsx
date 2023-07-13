@@ -26,7 +26,7 @@ const GeneratorsActions = ({ params }) => {
     });
     dispatch({ type: 'UPDATE_IMAGES', payload: images });
     dispatch({ type: 'UPDATE_UPDATED_GENERATOR', payload: { _id, uid } });
-    dispatch({ type: 'UPDATE_SECTION', payload: 3 });
+    dispatch({ type: 'UPDATE_SECTION', payload: 1 });
     navigate('/');
   };
   return (

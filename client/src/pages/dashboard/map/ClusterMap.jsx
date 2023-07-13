@@ -7,8 +7,7 @@ import Supercluster from 'supercluster';
 import './cluster.css';
 import GeocoderInput from './GeocoderInput';
 import PopupGenerator from './PopupGenerator';
-// import GeocoderInput from '../sidebar/GeocoderInput';
-// import PopupGenerator from './PopupGenerator';
+import Header from '../../../components/Header';
 
 
 const supercluster = new Supercluster({
@@ -73,6 +72,7 @@ const ClusterMap = ({ setSelectedLink, link }) => {
 
   return (
     <Box m="1.5rem 2.5rem">
+      <Header title="CLUSTER MAP" subtitle="Find All Generators by Location" />
       <Box
         sx={{
           height: '83vh',

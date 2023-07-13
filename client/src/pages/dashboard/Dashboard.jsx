@@ -90,7 +90,7 @@ export default function Dashboard() {
               noWrap
               component="div"
               sx={{ flexGrow: 1 }}
-            >git
+            >
               NGECP
             </Typography>
             <Box sx={{ gap: '1rem' }}>

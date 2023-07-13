@@ -80,6 +80,7 @@ const Generators = ({ setSelectedLink, link }) => {
               fontWeight: "bold",
               padding: "10px 20px",
             }}
+            onClick={() => dispatch({ type: 'UPDATE_SECTION', payload: 1 })}
           >
             <AddCircle sx={{ mr: "10px" }} />
             Add New

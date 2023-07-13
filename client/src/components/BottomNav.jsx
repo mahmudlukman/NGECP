@@ -1,5 +1,5 @@
 import { AddLocationAlt, LocationOn, AddHome, Handyman } from '@mui/icons-material'
-import { BottomNavigation, BottomNavigationAction, Box, Paper } from '@mui/material'
+import { BottomNavigation, BottomNavigationAction, Box, Paper, useTheme } from '@mui/material'
 import { useRef, useEffect } from 'react'
 
 import Hero from './hero/Hero'
@@ -12,6 +12,7 @@ import { useValue } from '../context/ContextProvider'
 
 
 const BottomNav = () => {
+  const theme = useTheme()
   const { state: { section }, dispatch } = useValue()
   const ref = useRef()
   useEffect(() => {
@@ -27,13 +28,21 @@ const BottomNav = () => {
       }[section]}
       <Paper
         elevation={3}
-        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 2 }}
+        sx={{ 
+          position: 'fixed', 
+          bottom: 0, 
+          left: 0, 
+          right: 0, 
+          zIndex: 2,
+         }}
       >
         <BottomNavigation
           showLabels
           value={section}
           onChange={(e, newValue) => dispatch({ type: 'UPDATE_SECTION', payload: newValue })}
-          sx={{ "&.Mui-selected": { color: '#388e3c' } }}
+          sx={{ 
+            "&.Mui-selected": { color: '#388e3c' },
+           }}
         >
           <BottomNavigationAction label='Home' icon={<AddHome />} sx={{ "&.Mui-selected": { color: '#388e3c' } }} />
           {/* <BottomNavigationAction label='Map' icon={<LocationOn />} sx={{ "&.Mui-selected": { color: '#388e3c' } }} /> */}

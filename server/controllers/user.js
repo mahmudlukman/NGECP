@@ -3,6 +3,7 @@ import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import tryCatch from './utils/tryCatch.js';
 import Generator from '../models/Generator.js';
+import otpGenerator from 'otp-generator'
 
 export const register = tryCatch(async (req, res) => {
     const { name, email, phone, password } = req.body;
@@ -91,3 +92,44 @@ export const updateStatus = tryCatch(async (req, res) => {
   await User.findByIdAndUpdate(req.params.userId, { role, active });
   res.status(200).json({ success: true, result: { _id: req.params.userId } });
 });
+
+
+export const verifyUser =tryCatch(async (req, res, next) => {
+  const {email} = req.method == "GET" ? req.query : req.body
+
+  // check the user existence
+  let exist = await User.findOne({email})
+  if(!exist) return res.status(404).json({success: false, message: "User not found"})
+  next()
+})
+
+export const generateOTP = tryCatch(async (req, res) => {
+  req.app.locals.OTP = otpGenerator.generate(6, {lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
+  res.status(201).json({success: true, result: {code: req.app.locals.OTP}})
+})
+
+export const verifyOTP = tryCatch(async (req, res) => {
+  const {code} = req.query
+  if(parseInt(req.app.locals.OTP) === parseInt(code)){
+    req.app.locals.OTP = null  //reset the OTP value
+    req.app.locals.resetSession = true  //start session for reset password
+    return res.status(201).json({success: true, message: 'Verify Successfully'})
+  }
+  return res.status(400).json({success: false, message: 'Invalid OTP'})
+})
+
+export const createResetSession = tryCatch(async(req, res) => {
+  if(req.app.locals.resetSession){
+    req.app.locals.resetSession = false  // allow access to this route only once
+    return res.status(201).json({success: true, message: 'Access Granted!'})
+  }
+  return res.status(440).json({success: false, message: "Session expired"})
+})
+
+export const resetPassword = tryCatch(async (req, res) => {
+  const {email, password} = req.body
+  const user = await User.findOne({email})
+  if(user){
+    const hashedPassword = await bcrypt.hash(password, 12);
+  }
+})
