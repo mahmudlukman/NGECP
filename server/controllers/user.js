@@ -94,15 +94,6 @@ export const updateStatus = tryCatch(async (req, res) => {
 });
 
 
-export const verifyUser =tryCatch(async (req, res, next) => {
-  const {email} = req.method == "GET" ? req.query : req.body
-
-  // check the user existence
-  let exist = await User.findOne({email})
-  if(!exist) return res.status(404).json({success: false, message: "User not found"})
-  next()
-})
-
 export const generateOTP = tryCatch(async (req, res) => {
   req.app.locals.OTP = otpGenerator.generate(6, {lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
   res.status(201).json({success: true, result: {code: req.app.locals.OTP}})
@@ -126,10 +117,14 @@ export const createResetSession = tryCatch(async(req, res) => {
   return res.status(440).json({success: false, message: "Session expired"})
 })
 
-export const resetPassword = tryCatch(async (req, res) => {
-  const {email, password} = req.body
-  const user = await User.findOne({email})
-  if(user){
-    const hashedPassword = await bcrypt.hash(password, 12);
-  }
+export const resetPassword =  tryCatch(async(req,res) => {
+  if(!req.app.locals.resetSession) return res.status(440).send({error : "Session expired!"});
+  const { email, password } = req.body;
+  const existingUser = await User.findOne({ email })
+  if(!existingUser) return res.status(404).json({ success: false, message: 'User does not exist!' });
+  const hashedPassword = await bcrypt.hash(password, 12)
+  await User.updateOne({ password: hashedPassword })
+  req.app.locals.resetSession = false; // reset session
+  return res.status(201).send({ success: true, message : "Record Updated...!"})
+        
 })
