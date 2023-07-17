@@ -1,17 +1,14 @@
 import mongoose from "mongoose";
+import bcrypt from 'bcrypt';
 
 const UserSchema = mongoose.Schema({
   name: {
     type: String,
-    min: 2,
-    max: 50,
     required: true
   },
   email: {
     type: String,
     unique: true,
-    min: 5,
-    max: 50,
     trim: true,
     lowercase: true,
     required: true
@@ -40,6 +37,19 @@ const UserSchema = mongoose.Schema({
 },
 {timestamps: true}
 )
+
+UserSchema.pre('save', async function(next){
+  if(this.isModified('password')){
+    const hash = await bcrypt.hash(this.password, 12)
+    this.password = hash
+  }
+  next()
+})
+
+UserSchema.methods.comparePassword = async function(password) {
+  const result = await bcrypt.compareSync(password, this.password)
+  return result
+}
 
 const User = mongoose.model('User', UserSchema)
 export default User

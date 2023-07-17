@@ -2,31 +2,26 @@ import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import tryCatch from './utils/tryCatch.js';
+import {sendError} from './utils/helper.js';
 import Generator from '../models/Generator.js';
 
 export const register = tryCatch(async (req, res) => {
     const { name, email, phone, password } = req.body;
-    if (password.length < 6)
-      return res.status(400).json({
-        success: false,
-        message: 'Password must be 6 characters or more',
-      });
+    // if (password.length < 6) return sendError(res, 'Password must be 6 characters or more');
     const existedUser = await User.findOne({ email});
-    if (existedUser)
-      return res
-        .status(400)
-        .json({ success: false, message: 'User already exists!' });
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const user = await User.create({
+    if (existedUser) return sendError(res, 'User already exists!')
+    // const hashedPassword = await bcrypt.hash(password, 12);
+    const user = new User({
       name,
       email,
       phone,
-      password: hashedPassword,
+      password
     });
     const { _id: id, photoURL, role, active } = user;
     const token = jwt.sign({ id, name, photoURL, phone, role }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
+    await user.save()
     res.status(201).json({
       success: true,
       result: { id, name, email: user.email, photoURL, phone, token, role, active },
@@ -39,22 +34,14 @@ export const login = tryCatch(async (req, res) => {
 
   const emailLowerCase = email.toLowerCase();
   const existedUser = await User.findOne({ email: emailLowerCase });
-  if (!existedUser)
-    return res
-      .status(404)
-      .json({ success: false, message: 'User does not exist!' });
-  const correctPassword = await bcrypt.compare(password, existedUser.password);
-  if (!correctPassword)
-    return res
-      .status(400)
-      .json({ success: false, message: 'Invalid credentials' });
+  if (!existedUser) return sendError(res, 'User does not exist!')
+
+  const correctPassword = await existedUser.comparePassword(password);
+  if (!correctPassword) return sendError(res, 'Invalid credentials')
 
   const { _id: id, name, photoURL, phone, role, active } = existedUser;
-  if (!active)
-    return res.status(400).json({
-      success: false,
-      message: 'This account has been suspended! Try to contact the admin',
-    });
+  if (!active) return sendError(res, 'This account has been suspended! Try to contact the admin')
+  
   const token = jwt.sign({ id, name, photoURL, phone, role }, process.env.JWT_SECRET, {
     expiresIn: '1h',
   });
