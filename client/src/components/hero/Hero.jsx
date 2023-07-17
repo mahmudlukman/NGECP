@@ -2,8 +2,6 @@ import { Box, Button, styled, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
 
-import heroImg from "../../hero_illustration.png";
-import show from "../../show.png";
 import showcase from "../../showcase.png";
 
 

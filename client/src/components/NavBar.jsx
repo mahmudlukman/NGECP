@@ -1,6 +1,5 @@
 import { AppBar, Box, Button, Container, IconButton, Toolbar, Typography } from "@mui/material"
 import { Lock, Menu } from "@mui/icons-material"
-import photoURL from '../profile.jpeg'
 import { useValue } from "../context/ContextProvider"
 import UserIcons from "./user/UserIcons"
 import { useState } from "react"
