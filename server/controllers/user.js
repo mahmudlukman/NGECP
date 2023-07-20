@@ -1,16 +1,15 @@
-import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import tryCatch from './utils/tryCatch.js';
-import {sendError} from './utils/helper.js';
+import {sendError, createRandomBytes} from './utils/helper.js';
 import Generator from '../models/Generator.js';
+import {generatePasswordResetTemplate, mailTransport} from './utils/mail.js'
+import ResetToken from '../models/resetToken.js';
 
 export const register = tryCatch(async (req, res) => {
     const { name, email, phone, password } = req.body;
-    // if (password.length < 6) return sendError(res, 'Password must be 6 characters or more');
     const existedUser = await User.findOne({ email});
     if (existedUser) return sendError(res, 'User already exists!')
-    // const hashedPassword = await bcrypt.hash(password, 12);
     const user = new User({
       name,
       email,
@@ -78,5 +77,30 @@ export const updateStatus = tryCatch(async (req, res) => {
   await User.findByIdAndUpdate(req.params.userId, { role, active });
   res.status(200).json({ success: true, result: { _id: req.params.userId } });
 });
+
+export const forgotPassword = async (req, res) => {
+  const {email} = req.body
+  if(!email) return sendError(res, 'Please provide a valid email!')
+
+  const emailLowerCase = email.toLowerCase();
+  const user = await User.findOne({email: emailLowerCase})
+  if(!user) return sendError(res, 'User not found, invalid request!')
+
+  const token = await ResetToken.findOne({owner: user._id})
+  if(token) return sendError(res, 'Only after one hour you can request for another token!')
+
+  const randomBytes = await createRandomBytes()
+  const resetToken = new ResetToken({owner: user._id, token: randomBytes})
+  await resetToken.save()
+
+  mailTransport().sendMail({
+    from: 'security@email.com',
+    to: user.email,
+    subject: 'Password Reset',
+    html: generatePasswordResetTemplate(`http://localhost:5173/reset-password?token=${randomBytes}&id=${user._id}`)
+  })
+
+  res.json({success: true, message: 'Password reset link has been sent to your email!'})
+}
 
 
