@@ -1,5 +1,5 @@
-import User from '../model/user.js'
-import ResetToken from '../model/resetToken.js'
+import User from '../models/User.js'
+import ResetToken from '../models/resetToken.js'
 import { isValidObjectId } from "mongoose"
 import {sendError} from "../controllers/utils/helper.js"
 
