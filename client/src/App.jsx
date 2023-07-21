@@ -9,6 +9,8 @@ import Notification from './components/Notification'
 import Generator from './components/generators/Generator'
 import Dashboard from './pages/dashboard/Dashboard'
 import { useValue } from './context/ContextProvider';
+import ForgotPassword from './pages/passwordReset/ForgotPassword';
+import ResetPassword from './pages/passwordReset/ResetPassword';
 
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
           <Routes>
             <Route path='dashboard/*' element={<Dashboard />} />
             <Route path='*' element={<Home />} />
+            <Route path='forgot-password' element={<ForgotPassword />} />
+            <Route path='reset-password' element={<ResetPassword />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

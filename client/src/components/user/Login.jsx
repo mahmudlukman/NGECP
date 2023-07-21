@@ -4,6 +4,7 @@ import { useValue } from "../../context/ContextProvider"
 import { useState, useRef, useEffect } from "react"
 import PasswordField from "./PasswordField"
 import { login, register } from "../../actions/user"
+import { Link } from "react-router-dom"
 
 const Login = () => {
   const { state: { openLogin }, dispatch } = useValue()
@@ -23,12 +24,12 @@ const Login = () => {
     e.preventDefault()
     const email = emailRef.current.value
     const password = passwordRef.current.value
-    if(!isRegister) return login({email, password}, dispatch)
+    if (!isRegister) return login({ email, password }, dispatch)
     const name = nameRef.current.value
     const phone = phoneRef.current.value
     const confirmPassword = confirmPasswordRef.current.value
-    if(password !== confirmPassword) return dispatch({type: 'UPDATE_ALERT', payload: {open: true, severity: 'error', message: 'Passwords do not match!'}})
-    register({name, email, phone, password}, dispatch)
+    if (password !== confirmPassword) return dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'error', message: 'Passwords do not match!' } })
+    register({ name, email, phone, password }, dispatch)
   }
 
   useEffect(() => {
@@ -105,14 +106,21 @@ const Login = () => {
               label='Confirm Password' />
           }
         </DialogContent>
-        <DialogActions sx={{ px: '19px' }}>
+        <DialogActions sx={{ justifyContent: 'space-between', px: '19px' }}>
+          <Link to='/forgot-password'>
+            <Button
+              size="small"
+            >
+              Forgot Password?
+            </Button>
+          </Link>
           <Button type='submit' variant='contained' endIcon={<Send />}>
             Submit
           </Button>
         </DialogActions>
       </form>
       <DialogActions sx={{ justifyContent: 'left', p: '5px 24px' }}>
-        {isRegister ? "Do you have an account? Sign in now" : "Don't you have an account? Create one now"}
+        {isRegister ? "Do you have an account?" : "Don't you have an account?"}
         <Button onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? 'Login' : 'Register'}
         </Button>
