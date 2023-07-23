@@ -100,7 +100,7 @@ export const forgotPassword = tryCatch(async (req, res) => {
     html: generatePasswordResetTemplate(`http://localhost:5173/reset-password?token=${randomBytes}&id=${user._id}`)
   })
 
-  res.status(200).json({success: true, message: 'Password reset link has been sent to your email!'})
+  res.status(200).json({success: true, result: {token, user}})
 })
 
 
@@ -126,7 +126,7 @@ export const resetPassword = tryCatch(async (req, res) => {
     subject: 'Password Reset Successfully',
     html: plainEmailTemplate('Password Reset Successfully', 'Now you can login with new password'),
   })
-  res.status(200).json({success: true, message: 'Password Reset Successfully'})
+  res.status(200).json({success: true, result: user})
 })
 
 
