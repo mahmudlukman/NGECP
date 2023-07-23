@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Box, Button, TextField, Typography, useTheme } from '@mui/material'
 import { Send } from '@mui/icons-material'
 import { useValue } from '../../context/ContextProvider'
+import { forgotPassword } from '../../actions/user'
 
 const ForgotPassword = () => {
   const { dispatch } = useValue()
@@ -11,6 +12,8 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const email = emailRef.current.value
+    forgotPassword({ email }, dispatch)
     
   }
 
@@ -21,7 +24,7 @@ const ForgotPassword = () => {
           sx={{
             width: 300,
             maxWidth: '100%',
-            margin: '50px 40px'
+            margin: '100px 40px'
           }}
         >
           <Typography variant='h6' color={theme.palette.secondary[300]}>Verify Your Email Address</Typography>
@@ -29,6 +32,7 @@ const ForgotPassword = () => {
             autoFocus
             margin='normal'
             variant='standard'
+            inputRef={emailRef}
             id='email'
             label='email'
             type='email'

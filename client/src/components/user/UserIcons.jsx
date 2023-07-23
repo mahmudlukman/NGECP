@@ -1,4 +1,4 @@
-import { Avatar, Box, IconButton, Tooltip } from '@mui/material'
+import { Avatar, Box, IconButton, Tooltip, Typography } from '@mui/material'
 import { useValue } from '../../context/ContextProvider'
 import UserMenu from './UserMenu'
 import { useState } from 'react'

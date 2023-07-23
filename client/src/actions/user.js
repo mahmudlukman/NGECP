@@ -30,6 +30,7 @@ export const login = async(user, dispatch) => {
   if(result) {
     dispatch({type: 'UPDATE_USER', payload: result})
     dispatch({type: 'CLOSE_LOGIN'})
+    dispatch({type: 'UPDATE_ALERT', payload: {open: true, severity: 'success', message: 'Login successfully'}})
   }
 
   dispatch({type: 'END_LOADING'})
@@ -82,4 +83,51 @@ export const logout = (dispatch) => {
   dispatch({type: 'UPDATE_USER', payload: null})
   dispatch({type: 'RESET_GENERATOR'})
   dispatch({type: 'UPDATE_USERS', payload: []})
+}
+
+export const forgotPassword = async(user, dispatch) => {
+  dispatch({type: 'START_LOADING'})
+
+  const result = await fetchData(
+    {url: url + '/forgot-password', body: user},
+    dispatch
+  ) 
+  if(result) {
+    dispatch({type: 'UPDATE_USER', payload: result})
+    dispatch({type: 'UPDATE_ALERT', payload: {open: true, severity: 'success', message: 'Password reset link has been sent to your email!'}})
+  }
+
+  dispatch({type: 'END_LOADING'})
+}
+
+export const verifyToken = async({token, id}, dispatch) => {
+  const result = await fetchData({
+    url: `${url}/verify-token?token=${token}&id=${id}`, 
+    method: 'GET', 
+    token,
+    id
+  }, dispatch)
+  if(result) {
+    dispatch({type: 'UPDATE_USERS', payload: result})
+  }
+}
+
+export const resetPassword = async(updatedFields, token, id, dispatch) => {
+  dispatch({type: 'START_LOADING'})
+
+  const result = await fetchData(
+    {
+      url: `${url}/reset-password?token=${token}&id=${id}`,
+      method: 'PATCH',
+      body: updatedFields,
+      token, 
+      id
+    },
+    dispatch)
+  if(result) {
+    dispatch({type: 'UPDATE_USER', payload: result})
+    dispatch({type: 'UPDATE_ALERT', payload: {open: true, severity: 'success', message: 'Your password has been updated successfully!'}})
+  }
+
+  dispatch({type: 'END_LOADING'})
 }
