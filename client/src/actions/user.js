@@ -100,17 +100,6 @@ export const forgotPassword = async(user, dispatch) => {
   dispatch({type: 'END_LOADING'})
 }
 
-export const verifyToken = async({token, id}, dispatch) => {
-  const result = await fetchData({
-    url: `${url}/verify-token?token=${token}&id=${id}`, 
-    method: 'GET', 
-    token,
-    id
-  }, dispatch)
-  if(result) {
-    dispatch({type: 'UPDATE_USERS', payload: result})
-  }
-}
 
 export const resetPassword = async(updatedFields, token, id, dispatch) => {
   dispatch({type: 'START_LOADING'})
