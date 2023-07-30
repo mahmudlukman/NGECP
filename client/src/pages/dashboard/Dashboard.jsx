@@ -10,13 +10,14 @@ import {
   useTheme
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import { Brightness4, Brightness7, DarkModeOutlined, Home, LightModeOutlined, Menu } from '@mui/icons-material';
+import { DarkModeOutlined, Home, LightModeOutlined, Menu } from '@mui/icons-material';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideList from './SideList';
 import Protected from '../../components/protected/Protected'
 import Login from '../../components/user/Login'
 import { useValue } from '../../context/ContextProvider';
+import useScrollPosition from './utils/useScrollPosition';
 
 
 const drawerWidth = 240;
@@ -40,6 +41,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function Dashboard() {
+  const scrollPosition = useScrollPosition()
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(true);
   const theme = useTheme()
@@ -64,7 +66,7 @@ export default function Dashboard() {
   return (
     <>
       <Box sx={{ display: 'flex' }}>
-        <AppBar sx={{ position: "fixed", background: 'none' }} open={open}>
+        <AppBar elevation={0} sx={{ position: "fixed", background: 'none', bgcolor: scrollPosition > 10 ? "rgba(7,7,16,.7)" : 'transparent', backdropFilter: scrollPosition > 10 && "blur(60px)" }} open={open}>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -94,7 +96,7 @@ export default function Dashboard() {
               NGECP
             </Typography>
             <Box sx={{ gap: '1rem' }}>
-              <IconButton onClick={() => dispatch({type: 'SET_MODE'})}>
+              <IconButton onClick={() => dispatch({ type: 'SET_MODE' })}>
                 {theme.palette.mode === 'dark' ? (
                   <DarkModeOutlined sx={{ fontSize: "25px" }} />
                 ) : (
