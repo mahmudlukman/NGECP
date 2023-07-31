@@ -3,6 +3,7 @@ import { Close, Send } from "@mui/icons-material"
 import { useValue } from "../../context/ContextProvider"
 import { useState, useRef, useEffect } from "react"
 import PasswordField from "./PasswordField"
+import EmailField from "./EmailField"
 import { login, register } from "../../actions/user"
 import { Link } from "react-router-dom"
 
@@ -74,17 +75,7 @@ const Login = () => {
               required
             />
           }
-          <TextField
-            autoFocus={!isRegister}
-            margin='normal'
-            variant='standard'
-            id='email'
-            label='Email'
-            type='email'
-            fullWidth
-            inputRef={emailRef}
-            required
-          />
+          <EmailField {...{emailRef}}/>
           {isRegister &&
             <TextField
               margin='normal'
