@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useMemo, useState } from 'react';
-import { Avatar, Box, Typography, useTheme } from '@mui/material';
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { Avatar, Box, useTheme } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import { useValue } from '../../../context/ContextProvider';
 import { getUsers } from '../../../actions/user';
 import moment from 'moment';
-import { grey } from '@mui/material/colors';
 import UsersActions from './UsersActions';
 import Header from '../../../components/Header';
 

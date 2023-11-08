@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Avatar, Box, Button, Tooltip, useTheme } from '@mui/material';
-import { AddCircle } from '@mui/icons-material';
+import { Avatar, Box, Tooltip, useTheme } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useValue } from '../../../context/ContextProvider';
 import { getGenerators } from '../../../actions/generator';
@@ -15,6 +14,7 @@ const Generators = ({ setSelectedLink, link }) => {
     state: { generators, currentUser },
     dispatch,
   } = useValue();
+  const id = 'NGECP/FCT/0'
 
   const theme = useTheme();
 
@@ -28,6 +28,16 @@ const Generators = ({ setSelectedLink, link }) => {
   const columns = useMemo(
     () => [
       {
+        sortable: true,
+        field: 'lineNo',
+        headerName: 'Id',
+        width: 150,
+        flex: 0,
+        editable: false,
+        renderCell: (params) =>
+         id + params.api.getRowIndex(params.row._id),
+      },
+      {
         field: 'images',
         headerName: 'Photo',
         width: 70,
@@ -35,12 +45,12 @@ const Generators = ({ setSelectedLink, link }) => {
         sortable: false,
         filterable: false,
       },
-      { field: 'company', headerName: 'Company', width: 170 },
+      { field: 'company', headerName: 'User', width: 170 },
       { field: 'usageType', headerName: 'Usage Type', width: 130 },
       { field: 'genType', headerName: 'Generator Type', width: 130 },
-      { field: 'power', headerName: 'Power', width: 100 },
+      { field: 'power', headerName: 'Capacity', width: 100 },
       { field: 'model', headerName: 'Model', width: 120 },
-      { field: 'serialNumber', headerName: 'Serial Number', width: 150 },
+      // { field: 'serialNumber', headerName: 'Serial Number', width: 150 },
       { field: 'lng', headerName: 'Longitude', width: 110 },
       { field: 'lat', headerName: 'Latitude', width: 110 },
       {
@@ -71,7 +81,7 @@ const Generators = ({ setSelectedLink, link }) => {
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
         <Header title="GENERATORS" subtitle="List of All Generators" />
-        <Box>
+        {/* <Box>
           <Button
             sx={{
               backgroundColor: theme.palette.secondary.light,
@@ -85,7 +95,7 @@ const Generators = ({ setSelectedLink, link }) => {
             <AddCircle sx={{ mr: "10px" }} />
             Add New
           </Button>
-        </Box>
+        </Box> */}
       </FlexBetween>
       <Box
         mt="40px"

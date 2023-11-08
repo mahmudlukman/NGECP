@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, IconButton, Tooltip } from '@mui/material';
 import { Delete, Edit, Preview } from '@mui/icons-material';
 import { useValue } from '../../../context/ContextProvider';

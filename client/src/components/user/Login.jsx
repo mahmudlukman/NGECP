@@ -75,7 +75,7 @@ const Login = () => {
               required
             />
           }
-          <EmailField {...{emailRef}}/>
+          <EmailField {...{ emailRef }} />
           {isRegister &&
             <TextField
               margin='normal'
@@ -111,7 +111,7 @@ const Login = () => {
         </DialogActions>
       </form>
       <DialogActions sx={{ justifyContent: 'left', p: '5px 24px' }}>
-        {isRegister ? "Do you have an account?" : "Don't you have an account?"}
+        {isRegister ? "Do you have an account?" : "Don't have an account?"}
         <Button onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? 'Login' : 'Register'}
         </Button>

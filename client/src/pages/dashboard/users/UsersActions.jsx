@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, CircularProgress, Fab } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Check, Save } from '@mui/icons-material';

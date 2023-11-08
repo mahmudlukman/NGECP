@@ -13,6 +13,7 @@ const initialState = {
 
 const AddDetails = () => {
   const {dispatch} = useValue()
+  // eslint-disable-next-line no-unused-vars
   const [spacing, setSpacing] = useState(2);
   const [inputs, setInputs] = useState(initialState)
 
@@ -45,7 +46,7 @@ const AddDetails = () => {
             </TextField>
           </Grid>
           <Grid item>
-            <TextField label='Power(kVA)' select name='power' value={inputs.power} onChange={onInputChange} sx={{ width: 220 }}>
+            <TextField label='Capacity(kVA)' select name='power' value={inputs.power} onChange={onInputChange} sx={{ width: 220 }}>
               <MenuItem value='10-30'>10-30</MenuItem>
               <MenuItem value='31-65'>31-65</MenuItem>
               <MenuItem value='66-100'>66-100</MenuItem>
@@ -60,7 +61,7 @@ const AddDetails = () => {
         <Grid container my={2} justifyContent="center" spacing={spacing}>
           <Grid item>
             <TextField
-              label='Company'
+              label='User'
               name='company'
               variant='outlined'
               value={inputs.company}
