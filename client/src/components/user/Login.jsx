@@ -98,13 +98,13 @@ const Login = () => {
           }
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'space-between', px: '19px' }}>
-          <Link to='/forgot-password'>
+          {/* <Link to='/forgot-password'>
             <Button
               size="small"
             >
               Forgot Password?
             </Button>
-          </Link>
+          </Link> */}
           <Button type='submit' variant='contained' endIcon={<Send />}>
             Submit
           </Button>
