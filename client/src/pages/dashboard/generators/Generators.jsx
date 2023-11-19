@@ -23,6 +23,7 @@ const Generators = ({ setSelectedLink, link }) => {
   useEffect(() => {
     setSelectedLink(link);
     if (generators.length === 0) getGenerators(dispatch);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const columns = useMemo(
